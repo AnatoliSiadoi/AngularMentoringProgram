@@ -1,9 +1,7 @@
-namespace Interfaces {
-    export interface ICourse {
-        id?: string;
-        title: string;
-        creationDate: Date;
-        duration: number;
-        description: string;
-    }
+export interface ICourse {
+    id?: number;
+    title: string;
+    creationDate: Date;
+    duration: number;
+    description: string;
 }

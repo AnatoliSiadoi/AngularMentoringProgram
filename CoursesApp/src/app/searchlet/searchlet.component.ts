@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchletComponent implements OnInit {
 
+  public inputSerchlet = 'Search something';
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public Search(): void{
+    console.log('Search');
   }
 
 }

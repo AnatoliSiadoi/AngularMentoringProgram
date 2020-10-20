@@ -1,8 +1,6 @@
 <div class = 'Courses'>
     <app-searchlet></app-searchlet>
     <button>+ Add Course</button>
-    <app-course-item></app-course-item>
-    <app-course-item></app-course-item>
-    <app-course-item></app-course-item>
-    <app-course-item></app-course-item>
+    <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of courses' [course] = 'course'></app-course-item>
+    <button (click)='LoadMore()' class='LoadMore'>Load More</button>
 </div>
