@@ -1,0 +1,16 @@
+.Header {
+    height: 50px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    background:  #a0aaf5;
+  }
+  
+  .Logo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: white;
+    position: relative;
+    left: 10px;
+  }
+  
