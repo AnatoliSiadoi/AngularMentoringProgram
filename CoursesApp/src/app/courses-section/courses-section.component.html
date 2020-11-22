@@ -1,6 +1,13 @@
 <div class = 'Courses'>
-    <app-searchlet></app-searchlet>
+    <app-searchlet courses="courses"></app-searchlet>
     <button>+ Add Course</button>
-    <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of courses' [course] = 'course'></app-course-item>
-    <button (click)='LoadMore()' class='LoadMore'>Load More</button>
+
+    <div *ngIf="courses.length > 0; else coursesWithNoData">
+        <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of courses | orderBy' courseDate [course]="course"></app-course-item>
+        <button (click)='LoadMore()' class='LoadMore'>Load More</button>
+    </div>
+
+    <ng-template #coursesWithNoData>
+        <p class="CoursesWithNoData">{{coursesWithNoDataMessage | uppercase}}</p>
+    </ng-template>
 </div>

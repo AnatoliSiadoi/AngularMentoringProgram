@@ -15,6 +15,12 @@ import { FormsModule } from '@angular/forms';
 import { RouteNotFoundComponent } from './route-not-found/route-not-found.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
 
+import { CourseDateDirective } from './directives/courseDate.directive';
+
+import { DurationPipe } from './pipes/duration.pipe';
+import { OrderByPipe } from './pipes/orderBy.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+
 const appRoutes: Routes =[
   { path: '', component: CoursesPageComponent },
   { path: '**', component: RouteNotFoundComponent }
@@ -31,14 +37,18 @@ const appRoutes: Routes =[
     LogoComponent,
     SearchletComponent,
     RouteNotFoundComponent,
-    CoursesPageComponent
+    CourseDateDirective,
+    CoursesPageComponent,
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule, 
     RouterModule.forRoot(appRoutes),
     FormsModule
   ],
-  providers: [],
+  providers: [FilterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

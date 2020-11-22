@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FilterPipe } from '../pipes/filter.pipe';
+import { ICourse } from './../Interfaces/icourse';
 
 @Component({
   selector: 'app-searchlet',
@@ -7,14 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchletComponent implements OnInit {
 
+  @Input() courses: ICourse[]
+
   public inputSerchlet = 'Search something';
 
-  constructor() { }
+  constructor( private filterPipe: FilterPipe ) 
+  {
+  }
 
   ngOnInit(): void {
   }
 
   public Search(): void{
+    this.courses = this.filterPipe.transform( this.courses, this.inputSerchlet );
     console.log('Search');
   }
 

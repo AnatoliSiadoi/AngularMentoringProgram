@@ -1,7 +1,7 @@
 <div class = 'Course'>
-    <h2>{{course?.title}}</h2>
-    <p>{{course?.duration}}</p>
-    <p>{{course?.creationDate}}</p>
+    <h2 [ngClass]="{'Star': course.topRated}">{{course?.title}}</h2>
+    <p>{{course?.duration | duration}}</p>
+    <p>{{course?.creationDate | date: 'dd.MM.yyyy'}}</p>
     <p>{{course?.description}}</p>
     <button (click) = 'Edit()'>Edit</button>
     <button (click) = 'Delete()'>Delete</button>

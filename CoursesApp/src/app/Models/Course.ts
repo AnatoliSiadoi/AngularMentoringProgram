@@ -5,12 +5,14 @@ export class Course implements ICourse {
     creationDate: Date;
     duration: number;
     description: string;
+    topRated: boolean;
   
-    constructor(id: number, title: string, creationDate: Date, duration: number, description: string ) {
+    constructor(id?: number, title?: string, creationDate?: Date, duration?: number, description?: string, topRated?: boolean) {
         this.creationDate = creationDate;
         this.description = description;
         this.duration = duration;
         this.id = id;
         this.title = title;    
+        this.topRated = topRated;  
     }
 }
