@@ -4,4 +4,19 @@
     padding: 24px;
     margin-bottom: 24px;
   }
+
+.ActualCourse {
+  border: 6px solid green;
+}
+  
+.FeatureCourse {
+  border: 6px solid blue;
+}
+
+.Star:after {
+  content: "\2B50";
+  margin-left: 15px;
+}
+
+  
   
