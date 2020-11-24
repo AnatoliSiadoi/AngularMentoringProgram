@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import {Routes, RouterModule} from '@angular/router';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -11,7 +12,7 @@ import { CourseItemComponent } from './course-item/course-item.component';
 import { FooterComponent } from './footer/footer.component';
 import { LogoComponent } from './logo/logo.component';
 import { SearchletComponent } from './searchlet/searchlet.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouteNotFoundComponent } from './route-not-found/route-not-found.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
 
@@ -46,7 +47,9 @@ const appRoutes: Routes =[
   imports: [
     BrowserModule, 
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AuthenticationModule
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]

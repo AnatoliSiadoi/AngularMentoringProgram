@@ -2,12 +2,17 @@
   <app-logo class = 'Logo'></app-logo>
   <ul class="Nav-container">
     <li>
-      <button>
-        <span>{{userLoginName}}</span>
-      </button>
+      <div *ngIf="isAuthenticated; else loginButton">
+        <p>{{userLoginName}}</p>
+      </div>
+      <ng-template #loginButton>
+        <button (click)="Login('/Login')">
+          <span>Log In</span>
+        </button>
+      </ng-template>
     </li>
     <li>
-      <button>
+      <button (click)="Logout()">
         <span>Log off</span>
       </button>
     </li>
