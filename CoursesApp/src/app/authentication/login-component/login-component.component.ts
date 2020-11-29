@@ -9,7 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponentComponent implements OnInit {
 
-  loginForm;
+  public loginForm: FormGroup;
 
   constructor(private authenticationService: AuthenticationService) 
   {
@@ -21,8 +21,8 @@ export class LoginComponentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  submit() {
-    if ( this.loginForm.invalid ) {
+  Submit() {
+    if (this.loginForm.invalid){
       return;
     }
     console.log(this.loginForm.value);

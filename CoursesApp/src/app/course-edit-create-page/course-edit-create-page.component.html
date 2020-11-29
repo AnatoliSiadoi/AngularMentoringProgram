@@ -1,0 +1,50 @@
+<div class="CourseCreateMain">
+    <div class="Header">New Course</div>
+        <form [formGroup]="courseEditCreateForm" (ngSubmit)="Submit()">
+        <div class="TitleWrapper">
+            <div class="Label">
+                <label for="title">Title:</label>
+                <p>*required</p>
+            </div>
+            <input formControlName="title" placeholder="Text input" required>
+        </div>
+
+        <div class="DescriptionWrapper">
+            <div class="Label">
+                <label for="description">Description:</label>
+                <p>*required</p>
+            </div>
+            <textarea formControlName="description" placeholder="Add description" required></textarea>
+        </div>
+
+        <div class="DateWrapper">
+            <div class="Label">
+                <label for="creationDate">Date:</label>
+                <p>*required</p>
+            </div>
+            <input formControlName="creationDate" type="date" required>
+        </div>
+
+        <div class="DurationWrapper">
+            <div class="Label">
+                <label for="duration">Duration:</label>
+                <p>*required</p>
+            </div>
+            <input formControlName="duration" type="number" placeholder="minutes" required>
+            <p *ngIf="courseEditCreateForm.controls.duration.value">{{courseEditCreateForm.controls.duration.value | duration}}</p>
+        </div>
+
+        <div class="AuthorsWrapper">
+            <div class="Label">
+                <label for="authors">Authors:</label>
+                <p>*required</p>
+            </div>
+            <input formControlName="authors" type="text" placeholder="Start typing" required>
+        </div>
+
+        <div class="ButtonsWrapper">
+            <button (click)="Cancel()">Cancel</button>
+            <button type="submit" [disabled]="courseEditCreateForm.invalid">Save</button>
+        </div>
+    </form>
+</div>

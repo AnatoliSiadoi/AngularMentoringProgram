@@ -1,23 +1,23 @@
-<div class="login-layout">
-    <h1>Login</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+<div class="LoginMain">
+    <div class="Header">Login</div>
+    <form [formGroup]="loginForm" (ngSubmit)="Submit()">
 
-        <div>
+        <div class="Label">
             <label for="login">Login:</label>
             <p>*required</p>
-            <input formControlName="login" placeholder="Enter Login" required>
-        </div> 
+        </div>
+        <input formControlName="login" placeholder="Enter Login" required>
 
-        <div>
+        <div class="Label">
             <label for="password">Password:</label>
             <p>*required</p>
-            <input formControlName="password" type="password" placeholder="Enter Password" required>
         </div>
+        <input formControlName="password" type="password" placeholder="Enter Password" required>
 
-        <div>
+        <div class="LogIn">
             <a href="">Forgot Password?</a>
             <button type="submit" [disabled]="loginForm.invalid">LogIn</button>
         </div>
-
+        
     </form>
 </div>

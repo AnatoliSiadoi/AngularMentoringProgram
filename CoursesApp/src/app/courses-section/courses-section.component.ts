@@ -1,6 +1,8 @@
 import { ICourse } from './../Interfaces/icourse';
 import { Component, OnInit } from '@angular/core';
 import { CourseServiceService } from './../services/course-service.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses-section',
@@ -9,10 +11,11 @@ import { CourseServiceService } from './../services/course-service.service';
 })
 export class CoursesSectionComponent implements OnInit {
 
-  public courses: ICourse[]; 
+  public courses: Observable<ICourse[]>; 
   public coursesWithNoDataMessage = 'No data. Feel free to add new courses';
 
-  constructor(private courseService: CourseServiceService) { }
+  constructor(private courseService: CourseServiceService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.courses = this.courseService.getAll();
@@ -25,6 +28,10 @@ export class CoursesSectionComponent implements OnInit {
 
   public LoadMore(): void{
     console.log('Load More button');
+  }
+
+  public AddCourse(): void{
+    this.router.navigate(['/add']);
   }
 
 }

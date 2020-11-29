@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationModule } from './authentication/authentication.module';
 
 import { AppComponent } from './app.component';
@@ -21,10 +21,12 @@ import { CourseDateDirective } from './directives/courseDate.directive';
 import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
+import { CourseEditCreatePageComponent } from './course-edit-create-page/course-edit-create-page.component';
 
 const appRoutes: Routes =[
   { path: '', component: CoursesPageComponent },
-  { path: '**', component: RouteNotFoundComponent }
+  { path: 'add', component: CourseEditCreatePageComponent },
+  { path: '**', component: RouteNotFoundComponent },
 ];
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes =[
     CoursesPageComponent,
     DurationPipe,
     OrderByPipe,
-    FilterPipe
+    FilterPipe,
+    CourseEditCreatePageComponent
   ],
   imports: [
     BrowserModule, 
