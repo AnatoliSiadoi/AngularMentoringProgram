@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './../authentication/authentication-service.service';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -8,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class BreadcrumbsComponent implements OnInit {
 
   breadcrumbs = 'Courses';
+  public isAuthenticated: boolean;
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) 
+  {
+  }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.authenticationService.isAuthenticated();
   }
 
 }

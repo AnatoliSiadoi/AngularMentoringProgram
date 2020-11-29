@@ -59,7 +59,9 @@ export class CourseItemComponent implements OnInit,
   }
 
   public Delete(): void{
-    this.onDelete.emit(this.course.id);
+    if (window.confirm('Do you really want to delete this course?')) {
+      this.onDelete.emit(this.course.id);
+    }
   }
 
 }

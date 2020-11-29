@@ -1,3 +1,5 @@
 <div class = 'Breadcrumbs'>
-    <p>{{breadcrumbs}}</p>
+    <div *ngIf="isAuthenticated;">
+        <p>{{breadcrumbs}}</p>
+    </div>
 </div>
