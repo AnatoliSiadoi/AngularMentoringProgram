@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICourse } from './../Interfaces/icourse';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,12 +44,12 @@ export class CourseServiceService {
       }];
   }
 
-  getAll(): ICourse[] {
-    return this.courses;
+  getAll(): Observable<ICourse[]> {
+    return of(this.courses);
   }
 
-  getById(id: number): ICourse {
-    return this.courses.find(course => course.id === id);
+  getById(id: number): Observable<ICourse> {
+    return of(this.courses.find(course => course.id === id));
   }
 
   add(course: ICourse): ICourse {

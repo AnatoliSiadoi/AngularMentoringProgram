@@ -1,12 +1,13 @@
 import { ICourse } from './../Interfaces/icourse';
 import { Component, OnInit, Input, Output, EventEmitter, 
   DoCheck, OnChanges, AfterContentInit, AfterContentChecked, AfterViewChecked, 
-  AfterViewInit } from '@angular/core';
+  AfterViewInit, ChangeDetectionStrategy  } from '@angular/core';
 
 @Component({
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
-  styleUrls: ['./course-item.component.css']
+  styleUrls: ['./course-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent implements OnInit, 
   DoCheck,
