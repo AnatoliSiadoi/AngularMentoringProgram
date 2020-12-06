@@ -21,11 +21,15 @@ export class HeaderComponent implements OnInit {
     this.isAuthenticated = this.authenticationService.isAuthenticated();
     var currentUser = this.authenticationService.getUserInfo();
     this.userLoginName = currentUser === null ? 'User login name!' :
-    currentUser.firstName + currentUser.lastName;
+    `Hello ${currentUser.firstName} ${currentUser.lastName}`;
   }
 
   Logout(): void {
-    this.authenticationService.logout();
+    if(this.authenticationService.logout())
+    {
+      this.userLoginName = 'User login name!';
+      this.isAuthenticated = this.authenticationService.isAuthenticated();
+    }
   }
 
   Login(pageRoute:string): void {

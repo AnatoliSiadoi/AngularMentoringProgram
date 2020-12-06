@@ -2,6 +2,7 @@ import { ICourse } from './../Interfaces/icourse';
 import { Component, OnInit, Input, Output, EventEmitter, 
   DoCheck, OnChanges, AfterContentInit, AfterContentChecked, AfterViewChecked, 
   AfterViewInit, ChangeDetectionStrategy  } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-item',
@@ -21,7 +22,7 @@ export class CourseItemComponent implements OnInit,
 
   @Output() onDelete: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.log(`ngOnInit`);
@@ -55,7 +56,8 @@ export class CourseItemComponent implements OnInit,
       console.log(msg);
   }
 
-  public Edit(): void{
+  public Edit(): void {
+    this.router.navigate( [ `courses/${ this.course.id }` ] );
     console.log('Edit');
   }
 
