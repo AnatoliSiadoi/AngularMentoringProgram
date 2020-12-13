@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IUser } from './../Interfaces/iuser';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,8 @@ import { IUser } from './../Interfaces/iuser';
 export class AuthenticationService {
 
   private users: IUser[];
-  private currentUser: IUser;
-  private isUserExist:boolean = false;
 
-  constructor() {
+  constructor(private router: Router) {
     this.users = [
       {
         id: '1',
@@ -36,22 +35,25 @@ export class AuthenticationService {
       }];
    }
 
-   login(user: IUser): void {
-    if (this.users.some(item => {
-      item.login === user.login && 
-      item.password === user.password
-    })) {
-      localStorage.setItem('userInfo', JSON.stringify(this.users.filter(item => {
-        item.login === user.login &&
-        item.password === user.password 
-      })[0]));
+   login(user: IUser): boolean {
+     const currentUser = this.users.find( item => {
+      return item.login === user.login
+        && item.password === user.password;
+    });
+    
+    if (currentUser) {
+      localStorage.setItem('userInfo', JSON.stringify(currentUser));
       localStorage.setItem('token', 'Super secret token');
+      return true;
     }
+    else return false; 
   }
 
-  logout(): void {
+  logout(): boolean {
     console.log(localStorage.getItem('userInfo'));
     localStorage.clear();
+    this.router.navigate(['login']);
+    return true;
   }
 
   isAuthenticated(): boolean {
@@ -61,10 +63,7 @@ export class AuthenticationService {
   getUserInfo(): IUser {
     if (this.isAuthenticated()) {
       return JSON.parse(localStorage.getItem('userInfo'));
-    } else 
-    {
-      return null;
-    }
+    } else return null;
   }
 
 }

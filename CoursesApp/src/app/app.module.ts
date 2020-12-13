@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationModule } from './authentication/authentication.module';
 
 import { AppComponent } from './app.component';
@@ -21,13 +20,9 @@ import { CourseDateDirective } from './directives/courseDate.directive';
 import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
+import { DatePipe } from '@angular/common';
 import { CourseEditCreatePageComponent } from './course-edit-create-page/course-edit-create-page.component';
-
-const appRoutes: Routes =[
-  { path: '', component: CoursesPageComponent },
-  { path: 'add', component: CourseEditCreatePageComponent },
-  { path: '**', component: RouteNotFoundComponent },
-];
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -49,12 +44,12 @@ const appRoutes: Routes =[
   ],
   imports: [
     BrowserModule, 
-    RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
-    AuthenticationModule
+    AuthenticationModule,
+    AppRoutingModule
   ],
-  providers: [FilterPipe],
+  providers: [FilterPipe, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

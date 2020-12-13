@@ -6,11 +6,21 @@
     background:  #a0aaf5;
   }
   
-  .Logo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 24px;
-    color: white;
-    position: relative;
-    left: 10px;
-  }
+.Logo {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  color: white;
+  position: relative;
+  left: 10px;
+}
+
+li {
+  list-style: none;
+  float: left;
+  margin: 5px;
+}
+
+p{
+  margin: 0px;
+}
   
