@@ -13,7 +13,7 @@ import { ICourse } from './../Interfaces/ICourse';
 export class BreadcrumbsComponent implements OnInit {
 
   public breadcrumbs: IBreadCrumb[];
-  private currentCourse: ICourse;
+  private courseTitle: string;
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -39,8 +39,11 @@ export class BreadcrumbsComponent implements OnInit {
     if (isDynamicRoute && !!route.snapshot) {
       const paramName = lastRoutePart.split(':')[1];
       path = path.replace(lastRoutePart, route.snapshot.params[paramName]);
-      this.courseService.getById(route.snapshot.params[paramName]).subscribe(course => this.currentCourse = course);
-      label = this.currentCourse.description;
+      this.courseService.getById(route.snapshot.params[paramName]).subscribe(course =>
+        { 
+        this.courseTitle = course.title; 
+      });
+      label = this.courseTitle;
     }
   
     const nextUrl = path ? `${url}/${path}` : url;

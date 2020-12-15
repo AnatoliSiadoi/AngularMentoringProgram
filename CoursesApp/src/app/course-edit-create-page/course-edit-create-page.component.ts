@@ -27,14 +27,16 @@ export class CourseEditCreatePageComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => this.identifier = params.id);
 
     if (this.identifier) {
-      this.courseService.getById(this.identifier).subscribe(course => this.currentCourse = course);
-
-      this.courseEditCreateForm = new FormGroup({
-        title: new FormControl(this.currentCourse.title),
-        description: new FormControl(this.currentCourse.description),
-        duration: new FormControl(this.currentCourse.duration),
-        creationDate: new FormControl(this.datepipe.transform(this.currentCourse.creationDate, 'MM-dd-yyyy')),
-        authors: new FormControl( this.currentCourse.authors?.join(' ')),
+      this.courseService.getById(this.identifier).subscribe(course => {
+        console.log(course);
+        this.currentCourse = course;
+        this.courseEditCreateForm = new FormGroup({
+          title: new FormControl(this.currentCourse.title),
+          description: new FormControl(this.currentCourse.description),
+          duration: new FormControl(this.currentCourse.duration),
+          creationDate: new FormControl(this.datepipe.transform(this.currentCourse.creationDate, 'MM-dd-yyyy')),
+          authors: new FormControl(), //new FormControl( this.currentCourse.authors?.join(' ')),
+        });
       });
     } else {
       this.courseEditCreateForm = new FormGroup({

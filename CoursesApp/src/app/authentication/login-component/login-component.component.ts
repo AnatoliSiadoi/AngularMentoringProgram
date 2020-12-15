@@ -1,3 +1,5 @@
+import { ILoginResponse } from './../../Interfaces/ilogin-response';
+import { IUserInfoResponse } from './../../Interfaces/iuser-info-response';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../authentication-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -30,14 +32,12 @@ export class LoginComponentComponent implements OnInit {
 
     console.log(this.loginForm.value);
 
-    if(this.authenticationService.login(this.loginForm.value))
-    {
-      console.log("Login is success");
-      this.router.navigate(['courses']);
-    }else {
-      alert("Incorrect credentials");
-      console.log("Login is deny");
-    }
+    this.authenticationService
+      .login(this.loginForm.value)
+      .subscribe((response: ILoginResponse) => {
+        this.authenticationService.setToken(response.token);
+        this.router.navigate(['/courses']);
+      });
   }
 
 }
