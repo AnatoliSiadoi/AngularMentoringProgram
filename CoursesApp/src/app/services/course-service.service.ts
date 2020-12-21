@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ICourse } from './../Interfaces/icourse';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
+import { ICourseResponse } from './../Interfaces/icourse-response';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,75 +11,79 @@ import { Observable, of } from 'rxjs';
 
 export class CourseServiceService {
 
-  private courses: ICourse[] = [
-    {
-      id: 1,
-      title: 'title 1',
-      creationDate: new Date('2020-12-31T00:00:00'),
-      duration: 1,
-      description: 'description 1',
-      topRated: true
-    },
-    {
-      id: 2,
-      title: 'title 2',
-      creationDate: new Date('2020-10-10T00:00:00'),
-      duration: 200,
-      description: 'description 2'
-    },
-    {
-      id: 3,
-      title: 'title 3',
-      creationDate: new Date(),
-      duration: 300,
-      description: 'description 3'
-    },
-    {
-      id: 4,
-      title: 'title 4',
-      creationDate: new Date(),
-      duration: 400,
-      description: 'description 4',
-      topRated: true
-    }];
+  private url: string = 'http://localhost:3004';
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  getAll(): Observable<ICourse[]> {
-    return of(this.courses);
+  getAll(start: number = 0, count: number = 4,
+   sort: string = 'date', textFragment: string = ''): Observable<ICourse[]> {
+    return this.httpClient.get<ICourseResponse[]>(`${ this.url }/courses`,
+      { 
+        params: new HttpParams()
+        .set('start', start.toString())
+        .set('count', count.toString())
+        .set('sort', sort)
+        .set('textFragment', textFragment) 
+      })
+      .pipe(map(courses => {
+        return courses.map(course => this.mapCourseResponseToCourse(course));
+      }));
   }
 
   getById(id: string): Observable<ICourse> {
-    return of(this.courses.find(course => String(course.id) === id));
+    return this.httpClient.get<ICourseResponse[]>(`${ this.url }/courses`, 
+      { 
+        params: new HttpParams()
+        .set('id', id) 
+      })
+      .pipe(map(course => this.mapCourseResponseToCourse(course[0])));
   }
 
-  add(inputCourse: ICourse): ICourse {
-    if(this.courses.length > 0)
-    {
-      const courseWithMaxIdentifier = this.courses.reduce(function(prev, current) {
-        return (prev.id > current.id) ? prev : current
-      });
-      inputCourse.id = courseWithMaxIdentifier.id + 1;
-    } else inputCourse.id = 1;
-
-    this.courses.push(inputCourse);
-    return inputCourse;
+  add(inputCourse: ICourse): Observable<ICourse> {
+    const request: ICourseResponse = this.mapCourseToCourseResponse(inputCourse);
+    return this.httpClient.post<ICourse>(`${ this.url }/courses`, request);
   }
 
-  update(course: ICourse): ICourse {
-    console.log(this.courses);
-    const updateItem = this.courses.find(this.findIndexToUpdate, course.id);
-    const index = this.courses.indexOf(updateItem);
-    this.courses[index] = course;
-    return course;
+  update(course: ICourse): Observable<ICourse> {
+    const request: ICourseResponse = this.mapCourseToCourseResponse(course);
+
+    return this.httpClient.patch<ICourseResponse>(`${ this.url }/courses`,
+       request,
+       {
+        params: new HttpParams()
+        .set('id', course.id.toString()) 
+      })
+      .pipe(map(course => this.mapCourseResponseToCourse(course)));
   }
 
-  findIndexToUpdate(newItem) { 
-    return newItem.id === this;
-}
+  delete(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${ this.url }/courses/` + id.toString());
+    // {
+    //   params: new HttpParams()
+    //   .set('id', course.id.toString()) 
+    // }
+  }
 
-  delete(id: number): void {
-    this.courses = this.courses.filter(course => course.id !== id);
+  private mapCourseResponseToCourse(course: ICourseResponse): ICourse {
+    return {
+      id: course.id,
+      title: course.name,
+      creationDate: new Date(course.date),
+      duration: course.length,
+      description: course.description,
+      topRated: course.isTopRated,
+    };
+  }
+
+  private mapCourseToCourseResponse(course: ICourse): ICourseResponse {
+    return {
+      id: course.id,
+      date: course.creationDate.toString(),
+      description: course.description,
+      isTopRated: course.topRated,
+      length: course.duration,
+      name: course.title
+    };
   }
   
 }

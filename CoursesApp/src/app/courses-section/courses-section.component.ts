@@ -13,17 +13,17 @@ export class CoursesSectionComponent implements OnInit {
 
   public courses: Observable<ICourse[]>; 
   public coursesWithNoDataMessage = 'No data. Feel free to add new courses';
+  private startLength = 50;
 
   constructor(private courseService: CourseServiceService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.courses = this.courseService.getAll();
+    this.courses = this.courseService.getAll(0, this.startLength);
   }
 
   public onDelete(id: number): void{
-    this.courseService.delete(id);
-    this.courses = this.courseService.getAll();
+    this.courseService.delete(id).subscribe(_ => this.courses = this.courseService.getAll(0, this.startLength-1));
   }
 
   public LoadMore(): void{

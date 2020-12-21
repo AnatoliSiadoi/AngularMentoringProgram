@@ -1,5 +1,7 @@
+import { AuthenticationInterceptor } from './services/authentication-interceptor.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthenticationModule } from './authentication/authentication.module';
 
@@ -47,9 +49,18 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     ReactiveFormsModule,
     AuthenticationModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [FilterPipe, DatePipe],
+  providers: [
+    FilterPipe, 
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

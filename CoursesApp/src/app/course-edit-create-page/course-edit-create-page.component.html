@@ -1,6 +1,6 @@
 <div class="CourseCreateMain">
     <div class="Header">New Course</div>
-        <form [formGroup]="courseEditCreateForm" (ngSubmit)="Submit()">
+        <form [formGroup]="courseEditCreateForm" (ngSubmit)="Submit()" *ngIf="courseEditCreateForm">
         <div class="TitleWrapper">
             <div class="Label">
                 <label for="title">Title:</label>
@@ -31,7 +31,7 @@
                 <p>*required</p>
             </div>
             <input formControlName="duration" type="number" placeholder="minutes" required>
-            <p *ngIf="courseEditCreateForm.controls.duration.value">{{courseEditCreateForm.controls.duration.value | duration}}</p>
+            <p *ngIf="courseEditCreateForm?.controls?.duration?.value">{{courseEditCreateForm?.controls?.duration?.value | duration}}</p>
         </div>
 
         <div class="AuthorsWrapper">

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IUserInfoResponse } from './../Interfaces/iuser-info-response';
 import { AuthenticationService } from './../authentication/authentication-service.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,26 +12,23 @@ import { Router } from '@angular/router';
 
 export class HeaderComponent implements OnInit {
 
-  public userLoginName: string;
+  public currentUser$: Observable<IUserInfoResponse>;
   public isAuthenticated: boolean;
 
-  constructor (private authenticationService: AuthenticationService, private router: Router) 
-  {
-  }
+  constructor (private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authenticationService.isAuthenticated();
-    var currentUser = this.authenticationService.getUserInfo();
-    this.userLoginName = currentUser === null ? 'User login name!' :
-    `Hello ${currentUser.firstName} ${currentUser.lastName}`;
+
+    if(this.isAuthenticated)
+    {
+      this.currentUser$ = this.authenticationService.getUserInfo();
+    }
   }
 
   Logout(): void {
-    if(this.authenticationService.logout())
-    {
-      this.userLoginName = 'User login name!';
-      this.isAuthenticated = this.authenticationService.isAuthenticated();
-    }
+    this.authenticationService.logout();    
+    this.isAuthenticated = false;
   }
 
   Login(pageRoute:string): void {

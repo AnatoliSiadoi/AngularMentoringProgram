@@ -1,6 +1,11 @@
+import { IUserInfoResponse } from './../Interfaces/iuser-info-response';
+import { ILoginResponse } from './../Interfaces/ilogin-response';
 import { Injectable } from '@angular/core';
 import { IUser } from './../Interfaces/iuser';
 import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,62 +13,47 @@ import { Router } from '@angular/router';
 
 export class AuthenticationService {
 
-  private users: IUser[];
+  private url: string = 'http://localhost:3004';
 
-  constructor(private router: Router) {
-    this.users = [
-      {
-        id: '1',
-        firstName: 'Anatoli',
-        lastName: 'Siadoi',
-        login: 'ASiadoi',
-        password: 'qwerty'
-      },
-      {
-        id: '2',
-        firstName: 'Sergey',
-        lastName: 'Kuptsov',
-        login: 'SKuptsov',
-        password: '12345'
-      },
-      {
-        id: '3',
-        firstName: 'Ivan',
-        lastName: 'Ivanov',
-        login: 'IIvanov',
-        password: '54321'
-      }];
-   }
+  constructor(private router: Router, 
+    private httpClient: HttpClient) { }
 
-   login(user: IUser): boolean {
-     const currentUser = this.users.find( item => {
-      return item.login === user.login
-        && item.password === user.password;
-    });
-    
-    if (currentUser) {
-      localStorage.setItem('userInfo', JSON.stringify(currentUser));
-      localStorage.setItem('token', 'Super secret token');
-      return true;
-    }
-    else return false; 
+   login(user: IUser): Observable<ILoginResponse> {
+      return this.httpClient
+        .post<ILoginResponse>( `${ this.url }/auth/login`, {
+          login: user.login,
+          password: user.password
+        })
+        .pipe(catchError(this.handleError.bind(this)))
   }
 
-  logout(): boolean {
-    console.log(localStorage.getItem('userInfo'));
+  logout(): void {
     localStorage.clear();
     this.router.navigate(['login']);
-    return true;
   }
 
   isAuthenticated(): boolean {
     return !(localStorage.getItem('token') === null);
   };
 
-  getUserInfo(): IUser {
-    if (this.isAuthenticated()) {
-      return JSON.parse(localStorage.getItem('userInfo'));
-    } else return null;
+  getUserInfo(): Observable<IUserInfoResponse> {
+    return this.httpClient
+      .post<IUserInfoResponse>( `${ this.url }/auth/userinfo`, { 
+        token: localStorage.getItem('token')
+      })
+      .pipe(catchError(this.handleError.bind(this)));
   }
 
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
+  setToken(token: string): void {
+      localStorage.clear();
+      localStorage.setItem('token', token);
+  }
+
+  private handleError( error: HttpErrorResponse ): void {
+    console.log(error.message);
+  }
 }

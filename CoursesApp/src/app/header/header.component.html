@@ -3,7 +3,7 @@
   <ul class="Nav-container">
     <li>
       <div *ngIf="isAuthenticated; else loginButton">
-        <p>{{userLoginName}}</p>
+        <p>Hello {{(currentUser$ | async)?.name.first}} {{(currentUser$ | async)?.name.last}}</p>
       </div>
       <ng-template #loginButton>
         <button (click)="Login('/login')">
