@@ -12,17 +12,18 @@ import { Observable } from 'rxjs';
 
 export class HeaderComponent implements OnInit {
 
-  public currentUser$: Observable<IUserInfoResponse>;
+  public currentUser: string;
   public isAuthenticated: boolean;
 
-  constructor (private authenticationService: AuthenticationService, private router: Router) { }
+  constructor (public authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authenticationService.isAuthenticated();
 
     if(this.isAuthenticated)
     {
-      this.currentUser$ = this.authenticationService.getUserInfo();
+      this.authenticationService.getUserInfo()
+      .subscribe(userInfo => this.currentUser = `Hello ${ userInfo.name.first } ${ userInfo.name.last }`);
     }
   }
 

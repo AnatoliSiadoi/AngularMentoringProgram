@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICourse } from './../Interfaces/icourse';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 import { ICourseResponse } from './../Interfaces/icourse-response';
 import { map } from 'rxjs/operators';
@@ -58,10 +58,6 @@ export class CourseServiceService {
 
   delete(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${ this.url }/courses/` + id.toString());
-    // {
-    //   params: new HttpParams()
-    //   .set('id', course.id.toString()) 
-    // }
   }
 
   private mapCourseResponseToCourse(course: ICourseResponse): ICourse {
