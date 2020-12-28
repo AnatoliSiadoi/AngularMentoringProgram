@@ -25,6 +25,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { DatePipe } from '@angular/common';
 import { CourseEditCreatePageComponent } from './course-edit-create-page/course-edit-create-page.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoadingBlockComponent } from './loading-block/loading-block.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AppRoutingModule } from './app-routing.module';
     DurationPipe,
     OrderByPipe,
     FilterPipe,
-    CourseEditCreatePageComponent
+    CourseEditCreatePageComponent,
+    LoadingBlockComponent
   ],
   imports: [
     BrowserModule, 

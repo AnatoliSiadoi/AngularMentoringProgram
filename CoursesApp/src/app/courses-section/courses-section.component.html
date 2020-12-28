@@ -1,13 +1,23 @@
 <div class = 'Courses'>
-    <app-searchlet courses="courses"></app-searchlet>
+        <input
+          type="text"
+          placeholder="Type to search"
+          (keyup)="searchTerm$.next($event.target.value)"
+        />
     <button (click)='AddCourse()'>+ Add Course</button>
 
-    <div *ngIf="(courses | async)?.length > 0; else coursesWithNoData">
-        <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of (courses | async) | orderBy' courseDate [course]="course"></app-course-item>
-        <button (click)='LoadMore()' class='LoadMore'>Load More</button>
+    <div *ngIf="!loadingService.isLoading(); else progressSpinner">
+        <div *ngIf="(courses | async)?.length > 0; else coursesWithNoData">
+            <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of (courses | async) | orderBy' courseDate [course]="course"></app-course-item>
+            <button (click)='LoadMore()' class='LoadMore'>Load More</button>
+        </div>
     </div>
 
     <ng-template #coursesWithNoData>
         <p class="CoursesWithNoData">{{coursesWithNoDataMessage | uppercase}}</p>
     </ng-template>
+
+    <ng-template #progressSpinner>
+        <app-loading-block></app-loading-block>
+      </ng-template>
 </div>
