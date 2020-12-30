@@ -18,7 +18,7 @@ export class AuthenticationService {
   constructor(private router: Router, 
     private httpClient: HttpClient) { }
 
-   login(user: IUser): Observable<ILoginResponse> {
+  login(user: IUser): Observable<ILoginResponse> {
       return this.httpClient
         .post<ILoginResponse>( `${ this.url }/auth/login`, {
           login: user.login,

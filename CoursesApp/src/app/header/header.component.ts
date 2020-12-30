@@ -1,8 +1,13 @@
+import { selectCurrentUser, selectisAuthenticated } from './../store/selectors/user.selectors';
+import { IAuthenticationState } from './../store/reducers/authentication.reducer';
+import { logoutAuthentications } from './../store/actions/authentication.actions';
 import { Component, OnInit } from '@angular/core';
 import { IUserInfoResponse } from './../Interfaces/iuser-info-response';
 import { AuthenticationService } from './../authentication/authentication-service.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store'
+import { IUser } from './../Interfaces/IUser'
 
 @Component({
   selector: 'app-header',
@@ -15,7 +20,10 @@ export class HeaderComponent implements OnInit {
   public currentUser: string;
   public isAuthenticated: boolean;
 
-  constructor (public authenticationService: AuthenticationService, private router: Router) { }
+  public currentUser$: Observable<IUser> = this.store$.pipe(select(selectCurrentUser));
+  public isAuth$: Observable<boolean> = this.store$.pipe(select(selectisAuthenticated));
+
+  constructor (private store$: Store<IAuthenticationState>,public authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authenticationService.isAuthenticated();
@@ -28,7 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   Logout(): void {
-    this.authenticationService.logout();    
+    this.store$.dispatch(logoutAuthentications());   
     this.isAuthenticated = false;
   }
 
