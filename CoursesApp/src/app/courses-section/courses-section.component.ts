@@ -3,8 +3,11 @@ import { Component, OnInit, Pipe } from '@angular/core';
 import { CourseServiceService } from './../services/course-service.service';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { throttleTime, debounceTime } from 'rxjs/operators';
 import { LoadingServiceService} from './../services/loading-service.service';
+import { ICoursesState } from './../store/reducers/courses.reducer';
+import { deleteCourse, loadCourses, searchCourse } from './../store/actions/courses.actions';
 
 @Component({
   selector: 'app-courses-section',
@@ -13,34 +16,34 @@ import { LoadingServiceService} from './../services/loading-service.service';
 })
 export class CoursesSectionComponent implements OnInit {
 
-  public courses: Observable<ICourse[]>; 
+  public courses: ICourse[]; 
   public coursesWithNoDataMessage = 'No data. Feel free to add new courses';
-  private startLength = 50;
   searchTerm$ = new Subject<string>();
-
 
   constructor(private courseService: CourseServiceService,
     private router: Router,
+    private store$: Store<{courses: ICoursesState;}>,
     public loadingService: LoadingServiceService) {
       this.loadingService.loadingOn();
+      this.store$.select('courses').subscribe(({courses}) => this.courses = courses);
       const result = this.searchTerm$.pipe(throttleTime(250), debounceTime(400));
       result.subscribe((val) => 
       {
         if (val.length > 3)
         {
-          this.courses = this.courseService.getAll(0, this.startLength, 'date', val)
+          this.store$.dispatch(searchCourse({search: val}));
         }
       });
       this.loadingService.loadingOff();
      }
 
   ngOnInit(): void {
-    this.courses = this.courseService.getAll(0, this.startLength);
+    this.store$.dispatch(loadCourses());
   }
 
   public onDelete(id: number): void{
     this.loadingService.loadingOn();
-    this.courseService.delete(id).subscribe(_ => this.courses = this.courseService.getAll(0, this.startLength-1));
+    this.store$.dispatch(deleteCourse({id}));
     this.loadingService.loadingOff();
   }
 

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +37,12 @@ export class AuthenticationService {
     return !(localStorage.getItem('token') === null);
   };
 
-  getUserInfo(): Observable<IUserInfoResponse> {
+  getUserInfo(): Observable<IUser> {
     return this.httpClient
       .post<IUserInfoResponse>( `${ this.url }/auth/userinfo`, { 
         token: localStorage.getItem('token')
       })
-      .pipe(catchError(this.handleError.bind(this)));
+      .pipe(map(user => this.mapUserResponseToUser(user)));
   }
 
   getToken(): string {
@@ -55,5 +56,15 @@ export class AuthenticationService {
 
   private handleError( error: HttpErrorResponse ): void {
     console.log(error.message);
+  }
+
+  private mapUserResponseToUser(user: IUserInfoResponse): IUser {
+    return {
+      id: user.id,
+      firstName: user.name.first,
+      lastName: user.name.last,
+      login: user.login,
+      password: user.password
+    };
   }
 }

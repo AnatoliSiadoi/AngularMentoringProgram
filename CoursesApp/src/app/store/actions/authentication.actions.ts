@@ -3,9 +3,11 @@ import { IUser } from './../../Interfaces/IUser'
 
 export enum authenticationsActionsType {
   login = '[Authentication] login',
+  loginSuccess = '[Authentication] login success',
   logout = '[Authentication] logout',
   logoutSuccess = '[Authentication] logout success',
-  loginSuccess = '[Authentication] login success'
+  setUpCurrentUser = '[Authentication] setUpCurrentUser',
+  setUpCurrentUserSuccess = '[Authentication] setUpCurrentUser success'
 }
 
 export const loginAuthentications = createAction(
@@ -14,7 +16,7 @@ export const loginAuthentications = createAction(
 );
 
 export const loginSuccessAuthentications = createAction(
-  authenticationsActionsType.logoutSuccess
+  authenticationsActionsType.loginSuccess
 );
 
 export const logoutAuthentications = createAction(
@@ -23,5 +25,14 @@ export const logoutAuthentications = createAction(
 
 export const logoutSuccessAuthentications = createAction(
   authenticationsActionsType.logoutSuccess
+);
+
+export const setUpCurrentUserAuthentications = createAction(
+  authenticationsActionsType.setUpCurrentUser,
+  props<IUser>()
+);
+
+export const setUpCurrentUserSuccessAuthentications = createAction(
+  authenticationsActionsType.setUpCurrentUserSuccess
 );
 

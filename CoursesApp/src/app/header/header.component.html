@@ -2,8 +2,8 @@
   <app-logo class = 'Logo'></app-logo>
   <ul class="Nav-container">
     <li>
-      <div *ngIf="authenticationService.isAuthenticated(); else loginButton">
-        <p>{{currentUser}}</p>
+      <div *ngIf="isAuth$ | async; else loginButton">
+        <p>Hello {{(currentUser$ | async)?.firstName}}!</p>
       </div>
       <ng-template #loginButton>
         <button (click)="Login('/login')">

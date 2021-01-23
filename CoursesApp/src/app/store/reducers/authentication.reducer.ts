@@ -18,8 +18,9 @@ export const initialState: IAuthenticationState = {
 
 const authenticationReducer = createReducer(
   initialState,
-  on( actions.loginAuthentications, ( state: IAuthenticationState ) => ( { ...state, isAuth: true })),
-  on( actions.logoutAuthentications, ( state: IAuthenticationState ) => ( { ...state, isAuth: false, userInfo: null })),
+  on( actions.loginAuthentications, ( state: IAuthenticationState ) => ({ ...state, isAuthenticated: true })),
+  on( actions.logoutAuthentications, ( state: IAuthenticationState ) => ({ ...state, isAuthenticated: false, currentUser: null })),
+  on( actions.setUpCurrentUserAuthentications, ( state: IAuthenticationState, currentUser ) => ({ ...state, currentUser }))
 );
 
 export default authenticationReducer;

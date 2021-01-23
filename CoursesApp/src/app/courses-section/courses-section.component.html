@@ -7,8 +7,8 @@
     <button (click)='AddCourse()'>+ Add Course</button>
 
     <div *ngIf="!loadingService.isLoading(); else progressSpinner">
-        <div *ngIf="(courses | async)?.length > 0; else coursesWithNoData">
-            <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of (courses | async) | orderBy' courseDate [course]="course"></app-course-item>
+        <div *ngIf="courses?.length > 0; else coursesWithNoData">
+            <app-course-item (onDelete) = 'onDelete($event)' *ngFor = 'let course of courses' courseDate [course]="course"></app-course-item>
             <button (click)='LoadMore()' class='LoadMore'>Load More</button>
         </div>
     </div>

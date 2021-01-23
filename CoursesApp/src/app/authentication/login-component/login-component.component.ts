@@ -3,7 +3,9 @@ import { IUserInfoResponse } from './../../Interfaces/iuser-info-response';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../authentication-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store'
+import { IAuthenticationState } from './../../store/reducers/authentication.reducer';
+import { loginAuthentications } from 'src/app/store/actions/authentication.actions';
 
 @Component({
   selector: 'app-login-component',
@@ -15,7 +17,7 @@ export class LoginComponentComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(private authenticationService: AuthenticationService,
-    private router: Router) 
+    private store$: Store<IAuthenticationState>) 
   {
     this.loginForm = new FormGroup({
       login: new FormControl(),
@@ -32,12 +34,7 @@ export class LoginComponentComponent implements OnInit {
 
     console.log(this.loginForm.value);
 
-    this.authenticationService
-      .login(this.loginForm.value)
-      .subscribe((response: ILoginResponse) => {
-        this.authenticationService.setToken(response.token);
-        this.router.navigate(['/courses']);
-      });
+    this.store$.dispatch(loginAuthentications(this.loginForm.value));
   }
 
 }

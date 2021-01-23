@@ -17,31 +17,18 @@ import { IUser } from './../Interfaces/IUser'
 
 export class HeaderComponent implements OnInit {
 
-  public currentUser: string;
-  public isAuthenticated: boolean;
-
   public currentUser$: Observable<IUser> = this.store$.pipe(select(selectCurrentUser));
   public isAuth$: Observable<boolean> = this.store$.pipe(select(selectisAuthenticated));
 
-  constructor (private store$: Store<IAuthenticationState>,public authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private store$: Store<IAuthenticationState>, private router: Router) { }
 
-  ngOnInit(): void {
-    this.isAuthenticated = this.authenticationService.isAuthenticated();
-
-    if(this.isAuthenticated)
-    {
-      this.authenticationService.getUserInfo()
-      .subscribe(userInfo => this.currentUser = `Hello ${ userInfo.name.first } ${ userInfo.name.last }`);
-    }
-  }
+  ngOnInit(): void {}
 
   Logout(): void {
     this.store$.dispatch(logoutAuthentications());   
-    this.isAuthenticated = false;
   }
 
   Login(pageRoute:string): void {
     this.router.navigate([pageRoute]);
   }
-
 }

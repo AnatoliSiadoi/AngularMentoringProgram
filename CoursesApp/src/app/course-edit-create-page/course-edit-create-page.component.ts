@@ -5,6 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CourseServiceService } from './../services/course-service.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { Store, Action } from '@ngrx/store';
+import { ICoursesState } from './../store/reducers/courses.reducer';
+import { addCourse, editCourse } from './../store/actions/courses.actions';
 
 @Component({
   selector: 'app-course-edit-create-page',
@@ -20,6 +23,7 @@ export class CourseEditCreatePageComponent implements OnInit {
   constructor(private courseService: CourseServiceService,
     private activatedRoute: ActivatedRoute,
     public datepipe: DatePipe,
+    private store$: Store<{courses: ICoursesState;}>,
     private router: Router) 
   {}
 
@@ -65,10 +69,10 @@ export class CourseEditCreatePageComponent implements OnInit {
 
     if (this.identifier){
       this.currentCourse.id = Number(this.identifier);
-      this.courseService.update(this.currentCourse);
+      this.store$.dispatch(editCourse({course:this.currentCourse}));
 
     } else{
-      this.courseService.add(this.currentCourse);
+      this.store$.dispatch(addCourse({course:this.currentCourse}));
     }
 
     this.router.navigate(['courses']);
