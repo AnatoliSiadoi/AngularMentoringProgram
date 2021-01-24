@@ -26,6 +26,13 @@ import { DatePipe } from '@angular/common';
 import { CourseEditCreatePageComponent } from './course-edit-create-page/course-edit-create-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoadingBlockComponent } from './loading-block/loading-block.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './store/effects/courses.effects';
+import { AuthenticationEffects } from './store/effects/authentication.effects';
 
 @NgModule({
   declarations: [
@@ -52,7 +59,13 @@ import { LoadingBlockComponent } from './loading-block/loading-block.component';
     ReactiveFormsModule,
     AuthenticationModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false
+    }) : [],
+    EffectsModule.forRoot([CoursesEffects, AuthenticationEffects])
   ],
   providers: [
     FilterPipe, 

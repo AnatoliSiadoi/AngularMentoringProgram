@@ -123,6 +123,7 @@
   },
   "defaultProject": "CoursesApp",
   "cli": {
-    "analytics": "79d9fb65-ef1e-4044-8861-404cb410175f"
+    "analytics": "79d9fb65-ef1e-4044-8861-404cb410175f",
+    "defaultCollection": "@ngrx/schematics"
   }
 }
