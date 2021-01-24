@@ -1,9 +1,10 @@
 <div class = 'Courses'>
+    <form [formGroup]="form" class="search-form">
         <input
-          type="text"
-          placeholder="Type to search"
-          (keyup)="searchTerm$.next($event.target.value)"
-        />
+        formControlName="search" type="text"
+        placeholder="Type to search"
+        (keyup)="searchTerm$.next($event.target.value)"/>
+    </form>
     <button (click)='AddCourse()'>+ Add Course</button>
 
     <div *ngIf="!loadingService.isLoading(); else progressSpinner">

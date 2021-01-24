@@ -33,6 +33,9 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { CoursesEffects } from './store/effects/courses.effects';
 import { AuthenticationEffects } from './store/effects/authentication.effects';
+import { DurationControlComponent } from './duration-control/duration-control.component';
+import { DateControlComponent } from './date-control/date-control.component';
+import { AuthorsControlComponent } from './authors-control/authors-control.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { AuthenticationEffects } from './store/effects/authentication.effects';
     OrderByPipe,
     FilterPipe,
     CourseEditCreatePageComponent,
-    LoadingBlockComponent
+    LoadingBlockComponent,
+    DurationControlComponent,
+    DateControlComponent,
+    AuthorsControlComponent
   ],
   imports: [
     BrowserModule, 

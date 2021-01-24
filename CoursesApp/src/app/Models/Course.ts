@@ -1,4 +1,4 @@
-import { ICourse } from './../Interfaces/icourse';
+import { ICourse, IAuthor } from './../Interfaces/icourse';
 export class Course implements ICourse {
     id?: number;
     title: string;
@@ -6,9 +6,9 @@ export class Course implements ICourse {
     duration: number;
     description: string;
     topRated: boolean;
-    authors?: string[];
+    authors?: IAuthor;
   
-    constructor(id?: number, title?: string, creationDate?: Date, duration?: number, description?: string, topRated?: boolean, authors?: string[]) {
+    constructor(id?: number, title?: string, creationDate?: Date, duration?: number, description?: string, topRated?: boolean, authors?: IAuthor) {
         this.creationDate = creationDate;
         this.description = description;
         this.duration = duration;

@@ -7,12 +7,22 @@
             <p>*required</p>
         </div>
         <input formControlName="login" placeholder="Enter Login" required>
+        <div *ngIf="getValidator('login').invalid" class="alert alert-danger">
+            <div *ngIf="getValidator('login').errors.required">
+              Required field.
+            </div>
+        </div>
 
         <div class="Label">
             <label for="password">Password:</label>
             <p>*required</p>
         </div>
         <input formControlName="password" type="password" placeholder="Enter Password" required>
+        <div *ngIf="getValidator('password').invalid" class="alert alert-danger">
+            <div *ngIf="getValidator('password').errors.required">
+              Required field.
+            </div>
+        </div>
 
         <div class="LogIn">
             <a href="">Forgot Password?</a>
