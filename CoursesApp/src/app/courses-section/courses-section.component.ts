@@ -8,6 +8,7 @@ import { throttleTime, debounceTime } from 'rxjs/operators';
 import { LoadingServiceService} from './../services/loading-service.service';
 import { ICoursesState } from './../store/reducers/courses.reducer';
 import { deleteCourse, loadCourses, searchCourse } from './../store/actions/courses.actions';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-courses-section',
@@ -19,6 +20,7 @@ export class CoursesSectionComponent implements OnInit {
   public courses: ICourse[]; 
   public coursesWithNoDataMessage = 'No data. Feel free to add new courses';
   searchTerm$ = new Subject<string>();
+  public form: FormGroup;
 
   constructor(private courseService: CourseServiceService,
     private router: Router,
@@ -38,6 +40,9 @@ export class CoursesSectionComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      search: new FormControl(null, [Validators.required])
+    });
     this.store$.dispatch(loadCourses());
   }
 

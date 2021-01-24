@@ -6,7 +6,12 @@
                 <label for="title">Title:</label>
                 <p>*required</p>
             </div>
-            <input formControlName="title" placeholder="Text input" required>
+            <input formControlName="title" placeholder="Text input" required maxlength="50">
+            <div *ngIf="getValidator('title').invalid" class="alert alert-danger">
+                <div *ngIf="getValidator('title').errors.required">
+                  Required field.
+                </div>
+            </div>
         </div>
 
         <div class="DescriptionWrapper">
@@ -14,33 +19,17 @@
                 <label for="description">Description:</label>
                 <p>*required</p>
             </div>
-            <textarea formControlName="description" placeholder="Add description" required></textarea>
+            <textarea formControlName="description" placeholder="Add description" required maxlength="500"></textarea>
+            <div *ngIf="getValidator('description').invalid" class="alert alert-danger">
+                <div *ngIf="getValidator('description').errors.required">
+                  Required field.
+                </div>
+            </div>
         </div>
 
-        <div class="DateWrapper">
-            <div class="Label">
-                <label for="creationDate">Date:</label>
-                <p>*required</p>
-            </div>
-            <input formControlName="creationDate" type="text" placeholder="Date tempalte - MM-DD-YYYY" required>
-        </div>
-
-        <div class="DurationWrapper">
-            <div class="Label">
-                <label for="duration">Duration:</label>
-                <p>*required</p>
-            </div>
-            <input formControlName="duration" type="number" placeholder="minutes" required>
-            <p *ngIf="courseEditCreateForm?.controls?.duration?.value">{{courseEditCreateForm?.controls?.duration?.value | duration}}</p>
-        </div>
-
-        <div class="AuthorsWrapper">
-            <div class="Label">
-                <label for="authors">Authors:</label>
-                <p>*required</p>
-            </div>
-            <input formControlName="authors" type="text" placeholder="Enter authors with space as separator" required>
-        </div>
+        <app-date-control formControlName="creationDate"></app-date-control>
+        <app-duration-control formControlName="duration"></app-duration-control>
+        <!--<app-authors-control formControlName="authors"></app-authors-control>-->
 
         <div class="ButtonsWrapper">
             <button (click)="Cancel()">Cancel</button>

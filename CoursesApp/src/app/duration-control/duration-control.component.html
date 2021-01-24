@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="Label">
+    <label for="length">Duration:</label>
+    <small>*required</small>
+  </div>
+  <input #durationField="ngModel" [(ngModel)]="value" type="number" min="0"
+    placeholder="In minutes" required>
+  <p *ngIf="value">{{value | duration}}</p>
+  <div *ngIf="durationField.invalid" class="alert-danger">
+    <div *ngIf="durationField.errors.required">
+      Required field.
+    </div>
+  </div>
+
+</div>

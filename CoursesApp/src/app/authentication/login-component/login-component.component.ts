@@ -1,5 +1,6 @@
 import { ILoginResponse } from './../../Interfaces/ilogin-response';
 import { IUserInfoResponse } from './../../Interfaces/iuser-info-response';
+import { Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../authentication-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -20,8 +21,8 @@ export class LoginComponentComponent implements OnInit {
     private store$: Store<IAuthenticationState>) 
   {
     this.loginForm = new FormGroup({
-      login: new FormControl(),
-      password: new FormControl()
+      login: new FormControl(null,  [Validators.required]),
+      password: new FormControl(null, [Validators.required])
     });
   }
 
@@ -37,4 +38,7 @@ export class LoginComponentComponent implements OnInit {
     this.store$.dispatch(loginAuthentications(this.loginForm.value));
   }
 
+  getValidator(fieldName: string): any {
+    return this.loginForm.get(fieldName);
+  }
 }

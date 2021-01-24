@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="Label">
+    <label for="date">Date:</label>
+    <small>*required</small>
+  </div>
+    <input #dateField="ngModel" name="date" type="date" [ngModel]="date | date:'MM/dd/yyyy'"
+      (ngModelChange)="onChange($event)" placeholder="Input for date" required>
+      <div *ngIf="dateField.invalid" class="alert-danger">
+        <div *ngIf="dateField.errors.required">
+          Required field.
+        </div>
+      </div>
+</div>

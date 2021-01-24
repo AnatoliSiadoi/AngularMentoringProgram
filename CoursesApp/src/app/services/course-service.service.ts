@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICourse } from './../Interfaces/icourse';
+import { ICourse, IAuthor } from './../Interfaces/icourse';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 import { ICourseResponse } from './../Interfaces/icourse-response';
@@ -60,6 +60,10 @@ export class CourseServiceService {
     return this.httpClient.delete<void>(`${ this.url }/courses/` + id.toString());
   }
 
+  getAuthors(): Observable<IAuthor[]> {
+    return this.httpClient.get<IAuthor[]>( `${ this.url }/authors`);
+  }
+
   private mapCourseResponseToCourse(course: ICourseResponse): ICourse {
     return {
       id: course.id,
@@ -68,6 +72,7 @@ export class CourseServiceService {
       duration: course.length,
       description: course.description,
       topRated: course.isTopRated,
+      authors: course.authors
     };
   }
 
@@ -78,7 +83,8 @@ export class CourseServiceService {
       description: course.description,
       isTopRated: course.topRated,
       length: course.duration,
-      name: course.title
+      name: course.title,
+      authors: course.authors
     };
   }
   
